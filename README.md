@@ -1,9 +1,6 @@
 # ESP 32 BASED MFD for Flight Info
 
 **An ESP32-powered, two-page multi-function display prototype for supplementary flight information.**
-
-**Project maintainer:** Kaustubh Acharya  
-**Project credits:** Kaustubh Acharya · Souvik Mahata · SRM–IST  
 **GitHub:** [Kaustubh-Acharya-101](https://github.com/Kaustubh-Acharya-101)
 
 > **Safety notice:** Educational hardware-integration prototype for bench testing and supplementary telemetry only. It is not a certified aircraft instrument, flight controller, primary navigation source, or safety-critical system. Never rely on it as the sole source for flight decisions.
