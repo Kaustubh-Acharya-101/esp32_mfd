@@ -1,0 +1,22 @@
+# Arduino / PlatformIO build artefacts
+.build/
+build/
+.pio/
+.cache/
+*.bin
+*.hex
+*.elf
+*.map
+*.o
+*.a
+*.tmp
+*.bak
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+secrets.h
+private_config.h
+.env
+.env.*

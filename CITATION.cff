@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it as below."
+title: "ESP 32 BASED MFD for Flight Info"
+type: software
+authors:
+  - family-names: Acharya
+    given-names: Kaustubh
+year: 2026
+license: MIT
