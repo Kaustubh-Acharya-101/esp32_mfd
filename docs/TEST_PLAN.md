@@ -1,47 +1,64 @@
-# Bench test and validation plan
+# Bench Test and Validation Plan
 
-Perform these checks with motors/propellers disconnected. This MFD is supplementary telemetry, not flight-certified avionics.
+**Project owner: Kaustubh Acharya**
 
-## Stage 1 — power and inspection
+Perform these tests in stages. Keep motors and propellers disconnected. Do not use this prototype for flight-critical decisions.
 
+## Stage 1 — visual and power inspection
+
+- [ ] Confirm module labels, pinout, and voltage requirements.
 - [ ] Inspect polarity, connectors, solder joints, and exposed conductors.
-- [ ] Verify regulated voltages with a multimeter before connecting the ESP32.
-- [ ] Verify common ground.
-- [ ] Keep WS2812 strip disconnected for the first display test.
+- [ ] Verify each regulated rail with a multimeter before plugging in the ESP32.
+- [ ] Verify common ground where signals cross between modules.
+- [ ] Leave the WS2812 strip disconnected during first display bring-up.
 
-## Stage 2 — display
+## Stage 2 — ESP32 and TFT
 
-- [ ] Connect only ESP32 and TFT.
+- [ ] Confirm the USB cable supports data.
+- [ ] Select the correct ESP32 board and COM port.
+- [ ] Verify sketch compilation before upload.
 - [ ] Confirm TFT controller and TFT_eSPI profile match.
-- [ ] Verify startup screen and landscape orientation.
-- [ ] Confirm all text fits inside 320 × 240.
+- [ ] Confirm landscape orientation and screen bounds.
+- [ ] Check that the startup title and both page layouts are visible.
 
 ## Stage 3 — I²C sensors
 
-- [ ] Connect MPU6050 and BMP280.
-- [ ] Confirm both are detected in Serial Monitor.
-- [ ] Tilt the stationary board slowly and check pitch/roll directions.
+- [ ] Connect the MPU6050 and scan the I²C bus.
+- [ ] Confirm the MPU6050 at the expected address.
+- [ ] Connect the BMP280 and confirm its address.
+- [ ] Confirm Serial Monitor reports the sensors online.
+- [ ] Tilt the stationary board slowly and check pitch/roll direction.
 - [ ] Treat pressure altitude as approximate.
 
 ## Stage 4 — GPS
 
 - [ ] Connect GPS TX to ESP32 RX2 (GPIO 16 by default).
-- [ ] Confirm baud rate (9600 by default).
-- [ ] Test outdoors with clear sky view.
-- [ ] Wait for a valid fix before relying on displayed coordinates.
+- [ ] Confirm the configured baud rate (9600 by default).
+- [ ] Inspect incoming serial data or parser updates.
+- [ ] Test outdoors with a clear sky view.
+- [ ] Wait for a valid fix before interpreting coordinates.
 
-## Stage 5 — controls and alerts
+## Stage 5 — button and alert inputs
 
-- [ ] Connect button between GPIO 27 and GND (or adjust config.h).
+- [ ] Connect the page button between GPIO 27 and GND.
 - [ ] Confirm one page change per press.
-- [ ] Verify flame input polarity using a safe module test method.
-- [ ] Add WS2812 only after checking supply and current budget.
+- [ ] Confirm the switch does not cause repeated page changes.
+- [ ] Verify flame sensor output polarity before enabling buzzer output.
+- [ ] Use a safe, controlled test method for the flame sensor.
 
-## Stage 6 — integration
+## Stage 6 — LEDs and buzzer
 
-- [ ] Run at least 15 minutes on the bench.
-- [ ] Check resets, brownouts, display corruption, and component heating.
-- [ ] Record measured voltages and actual wiring.
-- [ ] Repeat after code, wiring, or library changes.
+- [ ] Confirm the WS2812 supply voltage and current capacity.
+- [ ] Confirm common ground and correct DIN direction.
+- [ ] Use a suitable logic-level interface if required by the LED strip.
+- [ ] Confirm the buzzer's current requirement; add a driver if necessary.
+- [ ] Check component temperature during operation.
 
-Do not use this prototype for flight-critical decisions.
+## Stage 7 — integration observation
+
+- [ ] Run the complete system on a bench supply for at least 15 minutes.
+- [ ] Observe resets, brownouts, screen corruption, and component heating.
+- [ ] Record actual measured voltages and confirmed wiring.
+- [ ] Repeat after firmware, wiring, or library changes.
+
+Document the board model, library versions, compiler output, and test observations for each revision.

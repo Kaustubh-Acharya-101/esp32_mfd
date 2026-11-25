@@ -1,16 +1,19 @@
 # Contributing
 
-Thank you for your interest in **ESP 32 BASED MFD for Flight Info**.
+This repository documents the independent **ESP 32 BASED MFD for Flight Info** project by **Kaustubh Acharya**.
 
-## Before submitting changes
+Changes should improve correctness, readability, safety, or learning value.
 
-1. Describe the hardware used, including ESP32 board variant and display controller.
+## Before proposing a change
+
+1. State the ESP32 board, display controller, and module part numbers used.
 2. Keep GPIO assignments in `firmware/ESP32_MFD_Flight_Info/config.h`.
-3. Update `docs/HARDWARE_WIRING.md` whenever wiring changes.
+3. Update the block diagram and wiring document when interfaces or wiring change.
 4. Include Arduino IDE and library versions for build-related changes.
-5. Test changes on a current-limited bench supply before connecting the project to a UAV.
-6. Do not describe experimental sensor output as flight-certified or safety-critical.
+5. Test on a current-limited bench supply before attaching the system to a UAV.
+6. Do not describe experimental sensor values as flight-certified or safety-critical.
+7. Never commit passwords, API keys, Wi-Fi credentials, or private telemetry logs.
 
-Use a descriptive pull-request title, explain the changes, list hardware tested, and include compiler output or test observations where useful.
+Use a descriptive pull-request title and include the changes, hardware tested, compiler output, and relevant test observations.
 
-**Maintainer:** Kaustubh Acharya
+**Project owner and maintainer: Kaustubh Acharya**

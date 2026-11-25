@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">ESP 32 BASED MFD for Flight Info — System Block Diagram</title>
+<desc id="desc">Vector system diagram showing MPU6050 and BMP280 on shared I2C, NEO-6M on UART2, flame and button GPIO inputs, ESP32 processing, TFT SPI, WS2812, buzzer, status LED, serial diagnostics, and separate regulated power branches.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071321"/><stop offset="1" stop-color="#10263a"/></linearGradient>
+ <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#142b40"/><stop offset="1" stop-color="#0d2032"/></linearGradient>
+ <linearGradient id="mcu" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#123c56"/><stop offset="1" stop-color="#0c273b"/></linearGradient>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#000" flood-opacity=".28"/></filter>
+ <marker id="aC" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#58d7e9"/></marker>
+ <marker id="aG" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#80e0a1"/></marker>
+ <marker id="aA" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#f5c76b"/></marker>
+ <style>
+ .h{font:700 34px Arial,sans-serif;fill:#f1f7fb}.sub{font:16px Arial,sans-serif;fill:#a9c0d1}
+ .sec{font:700 20px Arial,sans-serif;fill:#d9eaf4;letter-spacing:1.4px}
+ .ct{font:700 20px Arial,sans-serif;fill:#f4f8fb}.cs{font:15px Arial,sans-serif;fill:#a9c0d1}
+ .b{font:16px Arial,sans-serif;fill:#d0e0e9}.port{font:700 14px Arial,sans-serif;fill:#69ddec}
+ .small{font:13px Arial,sans-serif;fill:#9eb5c5}.mt{font:700 29px Arial,sans-serif;fill:#fff}
+ .mb{font:16px Arial,sans-serif;fill:#c8e3ef}.power{font:600 15px Arial,sans-serif;fill:#f8e7b5}
+ .tag{font:700 13px Arial,sans-serif;fill:#f3fbff}
+ </style>
+</defs>
+<rect width="1600" height="1000" rx="24" fill="url(#bg)"/>
+<path d="M0 126H1600" stroke="#25445c" stroke-width="2"/>
+<text x="60" y="65" class="h">ESP 32 BASED MFD for Flight Info</text>
+<text x="62" y="98" class="sub">System architecture • signal interfaces • power distribution</text>
+<rect x="1300" y="42" width="240" height="38" rx="19" fill="#173f50" stroke="#2c7282"/>
+<text x="1420" y="67" text-anchor="middle" class="tag">PROJECT BY KAUSTUBH ACHARYA</text>
+<text x="60" y="170" class="sec">INPUTS &amp; SENSORS</text>
+<text x="590" y="170" class="sec">PROCESSING</text>
+<text x="1150" y="170" class="sec">DISPLAY &amp; ALERT OUTPUTS</text>
+<!-- input cards -->
+<g filter="url(#shadow)">
+ <rect x="60" y="198" width="390" height="136" rx="18" fill="url(#panel)" stroke="#28788a" stroke-width="2"/><rect x="60" y="198" width="8" height="136" rx="4" fill="#58d7e9"/>
+ <text x="92" y="238" class="ct">MPU6050 IMU</text><text x="92" y="268" class="cs">3-axis accelerometer + 3-axis gyroscope</text><text x="92" y="300" class="b">Pitch / roll estimate • relative yaw rate</text><text x="92" y="324" class="port">I²C ADDRESS 0x68</text>
+ <rect x="60" y="366" width="390" height="136" rx="18" fill="url(#panel)" stroke="#28788a" stroke-width="2"/><rect x="60" y="366" width="8" height="136" rx="4" fill="#58d7e9"/>
+ <text x="92" y="406" class="ct">BMP280 BAROMETER</text><text x="92" y="436" class="cs">Pressure + temperature sensor</text><text x="92" y="468" class="b">Pressure-derived approximate altitude</text><text x="92" y="492" class="port">I²C ADDRESS 0x76 / 0x77</text>
+ <rect x="60" y="534" width="390" height="116" rx="18" fill="url(#panel)" stroke="#b48337" stroke-width="2"/><rect x="60" y="534" width="8" height="116" rx="4" fill="#f5c76b"/>
+ <text x="92" y="576" class="ct">NEO-6M GPS</text><text x="92" y="606" class="cs">NMEA position • GPS altitude • satellites</text><text x="92" y="635" class="port">UART2 • 9600 BAUD</text>
+ <rect x="60" y="682" width="182" height="104" rx="16" fill="url(#panel)" stroke="#b48337" stroke-width="2"/>
+ <text x="80" y="722" class="ct" font-size="17">FLAME SENSOR</text><text x="80" y="750" class="cs">Digital alarm input</text><text x="80" y="775" class="port">GPIO 26*</text>
+ <rect x="258" y="682" width="192" height="104" rx="16" fill="url(#panel)" stroke="#b48337" stroke-width="2"/>
+ <text x="278" y="722" class="ct" font-size="17">PAGE BUTTON</text><text x="278" y="750" class="cs">Pull-up • active-low</text><text x="278" y="775" class="port">GPIO 27*</text>
+</g>
+<!-- input signal paths -->
+<path d="M450 266H490V350H550" fill="none" stroke="#58d7e9" stroke-width="4" marker-end="url(#aC)"/>
+<path d="M450 434H490V350" fill="none" stroke="#58d7e9" stroke-width="4"/>
+<circle cx="490" cy="350" r="6" fill="#58d7e9"/>
+<rect x="468" y="305" width="108" height="30" rx="15" fill="#174e62" stroke="#3b9cb0"/><text x="522" y="325" text-anchor="middle" class="port">SHARED I²C</text>
+<path d="M450 592H550" fill="none" stroke="#f5c76b" stroke-width="4" marker-end="url(#aA)"/>
+<rect x="463" y="556" width="90" height="27" rx="13" fill="#614d27"/><text x="508" y="575" text-anchor="middle" class="tag">UART2 RX/TX</text>
+<path d="M151 786V810H510V625H550" fill="none" stroke="#f5c76b" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#aA)"/>
+<path d="M354 786V820H530V670H550" fill="none" stroke="#f5c76b" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#aA)"/>
+<text x="465" y="802" class="small">Digital GPIO inputs</text>
+<!-- central controller -->
+<g filter="url(#shadow)">
+ <rect x="560" y="198" width="430" height="560" rx="24" fill="url(#mcu)" stroke="#3d9cb2" stroke-width="3"/>
+ <rect x="560" y="198" width="430" height="76" rx="22" fill="#174c62"/><path d="M560 254H990" stroke="#347d91" stroke-width="2"/>
+ <text x="775" y="246" text-anchor="middle" class="mt">ESP32 DEV BOARD</text>
+ <text x="775" y="309" text-anchor="middle" class="mb">Central controller • Arduino framework</text>
+ <rect x="615" y="337" width="320" height="61" rx="12" fill="#102b40" stroke="#347d91"/><text x="775" y="363" text-anchor="middle" class="ct" font-size="18">1  SENSOR ACQUISITION</text><text x="775" y="385" text-anchor="middle" class="small">Read I²C sensors • sample digital inputs</text>
+ <rect x="615" y="414" width="320" height="61" rx="12" fill="#102b40" stroke="#347d91"/><text x="775" y="440" text-anchor="middle" class="ct" font-size="18">2  DATA PROCESSING</text><text x="775" y="462" text-anchor="middle" class="small">Estimate attitude • parse GPS NMEA</text>
+ <rect x="615" y="491" width="320" height="61" rx="12" fill="#102b40" stroke="#347d91"/><text x="775" y="517" text-anchor="middle" class="ct" font-size="18">3  PAGE &amp; ALERT LOGIC</text><text x="775" y="539" text-anchor="middle" class="small">Select PFD / navigation page • alert state</text>
+ <rect x="615" y="568" width="320" height="61" rx="12" fill="#102b40" stroke="#347d91"/><text x="775" y="594" text-anchor="middle" class="ct" font-size="18">4  OUTPUT MANAGEMENT</text><text x="775" y="616" text-anchor="middle" class="small">Refresh TFT • update LED / buzzer outputs</text>
+ <text x="775" y="683" text-anchor="middle" class="small">USB serial • startup messages / diagnostics</text>
+ <rect x="672" y="704" width="206" height="34" rx="17" fill="#1a5665"/><text x="775" y="727" text-anchor="middle" class="tag">FIRMWARE: C++ / ARDUINO</text>
+</g>
+<!-- output cards -->
+<g filter="url(#shadow)">
+ <rect x="1150" y="198" width="390" height="132" rx="18" fill="url(#panel)" stroke="#58d7e9" stroke-width="2"/><rect x="1150" y="198" width="8" height="132" rx="4" fill="#58d7e9"/>
+ <text x="1182" y="238" class="ct">2.8-INCH SPI TFT</text><text x="1182" y="268" class="cs">320 × 240 • ST7789 profile example</text><text x="1182" y="299" class="b">Page 1: attitude • Page 2: GPS / status</text>
+ <rect x="1150" y="358" width="390" height="110" rx="18" fill="url(#panel)" stroke="#80e0a1" stroke-width="2"/><rect x="1150" y="358" width="8" height="110" rx="4" fill="#80e0a1"/>
+ <text x="1182" y="398" class="ct">WS2812 LED STRIP</text><text x="1182" y="428" class="cs">Status data from GPIO 25*</text><text x="1182" y="452" class="small">Separate suitable supply • common GND</text>
+ <rect x="1150" y="500" width="184" height="112" rx="18" fill="url(#panel)" stroke="#80e0a1" stroke-width="2"/>
+ <text x="1172" y="540" class="ct" font-size="16">PASSIVE BUZZER</text><text x="1172" y="570" class="cs">Alert tone</text><text x="1172" y="595" class="port">GPIO 14*</text>
+ <rect x="1350" y="500" width="190" height="112" rx="18" fill="url(#panel)" stroke="#80e0a1" stroke-width="2"/>
+ <text x="1372" y="540" class="ct" font-size="16">STATUS LED</text><text x="1372" y="570" class="cs">System indicator</text><text x="1372" y="595" class="port">GPIO 4*</text>
+ <rect x="1150" y="658" width="390" height="94" rx="18" fill="url(#panel)" stroke="#6c8799" stroke-width="2"/>
+ <text x="1182" y="698" class="ct">USB / SERIAL MONITOR</text><text x="1182" y="728" class="cs">Debug output • sensor startup / diagnostics</text>
+</g>
+<!-- output signal paths -->
+<path d="M990 250H1080V264H1150" fill="none" stroke="#58d7e9" stroke-width="4" marker-end="url(#aC)"/>
+<rect x="1020" y="226" width="76" height="27" rx="13" fill="#174e62"/><text x="1058" y="245" text-anchor="middle" class="port">SPI</text>
+<path d="M990 425H1060V413H1150" fill="none" stroke="#80e0a1" stroke-width="4" marker-end="url(#aG)"/>
+<rect x="1016" y="386" width="96" height="27" rx="13" fill="#23533f"/><text x="1064" y="405" text-anchor="middle" class="port">GPIO 25*</text>
+<path d="M990 530H1088V556H1150" fill="none" stroke="#80e0a1" stroke-width="3" marker-end="url(#aG)"/>
+<path d="M990 590H1120V630H1445V612" fill="none" stroke="#80e0a1" stroke-width="3" marker-end="url(#aG)"/>
+<text x="1018" y="511" class="small">GPIO outputs</text>
+<path d="M990 682H1080V705H1150" fill="none" stroke="#a9c0d1" stroke-width="3" marker-end="url(#aC)"/>
+<!-- power distribution with a true branch -->
+<rect x="60" y="844" width="1480" height="104" rx="20" fill="#302a1d" stroke="#b48337" stroke-width="2"/>
+<text x="90" y="880" class="sec" fill="#f5d28c">POWER DISTRIBUTION — SEPARATE FROM SIGNAL FLOW</text>
+<rect x="90" y="896" width="300" height="36" rx="9" fill="#554326" stroke="#a9823d"/><text x="240" y="920" text-anchor="middle" class="power">Battery / regulated DC input</text>
+<path d="M390 914H460" stroke="#f5c76b" stroke-width="3" marker-end="url(#aA)"/>
+<rect x="470" y="896" width="350" height="36" rx="9" fill="#554326" stroke="#a9823d"/><text x="645" y="920" text-anchor="middle" class="power">Protection + voltage regulation</text>
+<path d="M820 914H875V895H915" fill="none" stroke="#f5c76b" stroke-width="3" marker-end="url(#aA)"/>
+<path d="M875 914V934H1245V914H1270" fill="none" stroke="#f5c76b" stroke-width="3" marker-end="url(#aA)"/>
+<rect x="925" y="896" width="275" height="36" rx="9" fill="#554326" stroke="#a9823d"/><text x="1062" y="920" text-anchor="middle" class="power">ESP32 + logic modules</text>
+<rect x="1275" y="896" width="230" height="36" rx="9" fill="#554326" stroke="#a9823d"/><text x="1390" y="920" text-anchor="middle" class="power">LED rail if required</text>
+<text x="60" y="977" class="small">* Example GPIO defaults from config.h. Confirm board pinout, display controller, module voltage limits, and rail current before wiring.</text>
+<text x="1540" y="977" text-anchor="end" class="small">Educational bench prototype • not certified avionics</text>
+</svg>
